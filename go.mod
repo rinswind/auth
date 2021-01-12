@@ -1,4 +1,4 @@
-module example.org/auth
+module github.com/rinswind/auth
 
 go 1.15
 
