@@ -1,4 +1,4 @@
-module github.com/rinswind/auth
+module github.com/rinswind/auth-go
 
 go 1.15
 
