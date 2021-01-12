@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"regexp"
 
-	"example.org/auth/tokens"
 	"github.com/gin-gonic/gin"
+	"github.com/rinswind/auth-go/tokens"
 )
 
 const (
