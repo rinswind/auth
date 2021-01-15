@@ -26,6 +26,7 @@ type TokenDetails struct {
 	RefreshExpires int64
 }
 
+// AuthReader reads the login cache
 type AuthReader struct {
 	Redis *redis.Client
 
@@ -33,6 +34,7 @@ type AuthReader struct {
 	RTSecret string
 }
 
+// AuthWriter writes to the login cache
 type AuthWriter struct {
 	Redis *redis.Client
 
@@ -102,13 +104,7 @@ func (aw *AuthWriter) CreateAuth(td *TokenDetails) error {
 }
 
 // DeleteAuth destroys a users's login
-// TODO Require the "access_uuid" instead? This API models Authentication not as a JWT token, but rather as a map of claims
-func (aw *AuthWriter) DeleteAuth(claims map[string]interface{}) (uint64, error) {
-	atUUID, ok := claims["access_uuid"].(string)
-	if !ok {
-		return 0, fmt.Errorf("No %v claim in token", "access_uuid")
-	}
-
+func (aw *AuthWriter) DeleteAuth(atUUID string) (uint64, error) {
 	userID, err := aw.Redis.Del(context.Background(), atUUID).Uint64()
 	if err != nil {
 		return 0, err
